@@ -1,4 +1,4 @@
-name: release
+name: pyrite-npm
 
 on:
   push:
@@ -32,7 +32,12 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .\next-npm\
-          tags: ghcr.io/pyritecloud/next-example:latest
+          context: ./next-npm
+          tags: ghcr.io/pyritecloud/next-example-npm:latest
           platforms: linux/amd64,linux/arm64
           push: true
+
+      - name: Redeploy Deployment
+        uses: PyriteCloud/redeploy-action@v1
+        with:
+          token: ${{ secrets.PYRITE_TOKEN_NPM }}
